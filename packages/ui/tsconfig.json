@@ -1,5 +1,5 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
-  "include": ["src"],
+  "include": ["src", "__tests__/accordion.test.tsx", "__tests__/button.test.tsx", "__tests__/dropdown.test.tsx", "__tests__/grid.test.tsx", "__tests__/modal.test.tsx", "__tests__/number-input.test.tsx"],
   "exclude": ["dist", "build", "node_modules"]
 }

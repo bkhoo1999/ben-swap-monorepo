@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import Grid from "../grid"
+import Grid from "../src/grid"
 
 describe("Grid Component", () => {
   test("renders the container with the correct grid size", () => {

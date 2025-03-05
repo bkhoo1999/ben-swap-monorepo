@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import "@testing-library/jest-dom"
-import Accordion from "../accordion"
+import Accordion from "../src/accordion"
 
 describe("Accordion Component", () => {
   test("renders with title", () => {
