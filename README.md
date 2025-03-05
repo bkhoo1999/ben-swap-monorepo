@@ -42,9 +42,8 @@
 * Built using <b>React + NextJs + TailwindCSS + Turbo</b>.
 * Testing using <b>React Testing Framework + Jest</b>.
 * Monorepo housed with <b>TurboRepo + NPM Workspace</b>.
-* <i>Not publised on NPM</i>. 
 
-### <u>Applications</u>
+### <u>Application</u>
 <b>currency-swap</b>: 
 <pre>Currency swap exchange application.</pre>
 <b>@repo/ui</b>: 
@@ -52,6 +51,14 @@
 Package dependency that holds reusable components with Tests.
 Consumed by currency-swap application.
 Components: <b>Accordion, NumberInput, Dropdown, Button, Modal, Grid</b>
+</pre>
+
+### <u>GitHub Workflows</u>
+* <b>Main</b>: Run compilation, lint and test upon pushing to Main Branch.
+* <b>Preview</b>: Run compilation, lint and test upon changes on Pull Request.
+* <b>Package Publisher</b>: Publishing existing package to NPM through Release Note.
+<pre>
+<b>Tag release naming convention:</b> packageName-v1.0.0
 </pre>
 
 ### <u>Why TurboRepo with NPM Workspace?</u>
