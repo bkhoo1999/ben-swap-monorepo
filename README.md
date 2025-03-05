@@ -2,6 +2,8 @@
 
 <p>Welcome to Ben's Swap Exchange Service!</p>
 
+[![Main Build](https://github.com/bkhoo1999/ben-swap-monorepo/actions/workflows/main.yml/badge.svg)](https://github.com/bkhoo1999/ben-swap-monorepo/actions/workflows/main.yml)
+
 ![image](https://github.com/user-attachments/assets/181a6ecd-33c2-467c-8c5f-f0d9dbf91bfa)
 
 ## Installation
