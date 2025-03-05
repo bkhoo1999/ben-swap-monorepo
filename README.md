@@ -35,12 +35,10 @@
 * [Additonal Mock Feature] Perform exchange for desired currency. 
 
 ## Architecture
-<p>
-    Built using <b>React + NextJs + TailwindCSS + Turbo</b>.<br/>
-    Testing using <b>React Testing Framework + Jest</b>.<br/>
-    Monorepo housed with <b>TurboRepo + NPM Workspace</b>.
-    <i>Not publised on NPM.</i>.
-</p>
+* Built using <b>React + NextJs + TailwindCSS + Turbo</b>.
+* Testing using <b>React Testing Framework + Jest</b>.
+* Monorepo housed with <b>TurboRepo + NPM Workspace</b>.
+* <i>Not publised on NPM</i>. 
 
 ### <u>Applications</u>
 <b>currency-swap</b>: 
@@ -49,7 +47,7 @@
 <pre>
 Package dependency that holds reusable components with Tests.
 Consumed by currency-swap application.
-<b>Accordion, NumberInput, Dropdown, Button, Modal, Grid</b>
+Components: <b>Accordion, NumberInput, Dropdown, Button, Modal, Grid</b>
 </pre>
 
 ### <u>Why TurboRepo with NPM Workspace?</u>
