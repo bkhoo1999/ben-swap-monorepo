@@ -60,6 +60,7 @@ Components: <b>Accordion, NumberInput, Dropdown, Button, Modal, Grid</b>
 <pre>
 <b>Tag release naming convention:</b> packageName-v1.0.0
 </pre>
+Example: https://www.npmjs.com/package/@benswap/ui
 
 ### <u>Why TurboRepo with NPM Workspace?</u>
 <p>
