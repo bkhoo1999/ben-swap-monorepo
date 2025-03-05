@@ -6,12 +6,12 @@ import { useApp } from "../context/app-context"
 import { formatNumber, calculateSwap, roundPrice } from "../utils/calculate"
 import { CurrencyPair } from "../api/currency/route"
 
-import NumberInput from "@repo/ui/number-input"
-import Dropdown, { Option } from "@repo/ui/dropdown"
-import Button from "@repo/ui/button"
-import Accordion from "@repo/ui/accordion"
-import Grid from "@repo/ui/grid"
-import Modal from "@repo/ui/modal"
+import NumberInput from "@benswap/ui/number-input"
+import Dropdown, { Option } from "@benswap/ui/dropdown"
+import Button from "@benswap/ui/button"
+import Accordion from "@benswap/ui/accordion"
+import Grid from "@benswap/ui/grid"
+import Modal from "@benswap/ui/modal"
 
 const SwapComponent = () => {
   const { isLoading, notification, fetchCurrencyPairs, swapCurrency, closeNotification } = useApp()
