@@ -46,7 +46,7 @@
 ### <u>Application</u>
 <b>currency-swap</b>: 
 <pre>Currency swap exchange application.</pre>
-<b>@repo/ui</b>: 
+<b>@benswap/ui</b>: 
 <pre>
 Package dependency that holds reusable components with Tests.
 Consumed by currency-swap application.
