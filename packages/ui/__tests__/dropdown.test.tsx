@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import "@testing-library/jest-dom"
-import Dropdown, { Option } from "../dropdown"
+import Dropdown, { Option } from "../src/dropdown"
 
 describe("Dropdown Component", () => {
   const mockOptions: Option[] = [

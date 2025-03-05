@@ -5,5 +5,5 @@ export default {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
-  testMatch: ["<rootDir>/src/__tests__/**/*.test.(ts|tsx)"], 
+  testMatch: ["<rootDir>/__tests__/**/*.test.(ts|tsx)"], 
 }
