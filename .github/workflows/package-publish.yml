@@ -5,12 +5,38 @@ on:
     types: [published]
 
 jobs:
-  publish:
+  validate:
     runs-on: ubuntu-latest
+    steps:
+      - name: Validate release tag format
+        run: |
+          TAG_NAME="${{ github.event.release.tag_name }}"
+          if [[ ! "$TAG_NAME" =~ ^[a-z0-9-]+-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Invalid tag format: $TAG_NAME"
+            echo "Expected format: package-name-vX.Y.Z (e.g., ui-v1.0.0)"
+            exit 1
+          fi
+          echo "✅ Tag format is valid"
 
+  publish:
+    needs: validate
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Extract package name from release tag
+        run: |
+          PACKAGE_NAME=$(echo "${{ github.event.release.tag_name }}" | sed -E 's/-v[0-9]+.*$//')
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+
+      - name: Verify package exists
+        run: |
+          if [ ! -d "packages/$PACKAGE_NAME" ]; then
+            echo "❌ Package 'packages/$PACKAGE_NAME' does not exist!"
+            exit 1
+          fi
+          echo "✅ Package '$PACKAGE_NAME' exists"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -20,18 +46,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Extract package name from release tag
-        run: |
-          PACKAGE_NAME=$(echo "${{ github.event.release.tag_name }}" | cut -d'-' -f1)
-          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
-
-      - name: Verify package exists
-        run: |
-          if [ ! -d "packages/$PACKAGE_NAME" ]; then
-            echo "Package 'packages/$PACKAGE_NAME' does not exist!"
-            exit 1
-          fi
 
       - name: Build package
         run: npm run build --workspace=packages/${{ env.PACKAGE_NAME }}
