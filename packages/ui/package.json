@@ -1,6 +1,6 @@
 {
   "name": "@benswap/ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -13,7 +13,7 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    "./*": "./src/*.tsx"
+    "./*": "./src/*"
   },
   "license": "MIT",
   "scripts": {
