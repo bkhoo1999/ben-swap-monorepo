@@ -1,6 +1,6 @@
 {
   "name": "@benswap/ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -8,18 +8,17 @@
     "**/*.css"
   ],
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    "./*": "./src/*"
+    "./*": "./dist/*.js"
   },
   "license": "MIT",
   "scripts": {
-    "build": "tailwindcss -i ./styles.css -o ./dist/index.css",
+    "build": "tsc && tailwindcss -i ./styles.css -o ./dist/index.css",
     "check-types": "tsc --noEmit",
-    "dev": "tailwindcss -i ./styles.css -o ./dist/index.css --watch",
+    "dev": "tsc --watch & tailwindcss -i ./styles.css -o ./dist/index.css --watch",
     "lint": "eslint src --max-warnings 0",
     "test": "jest",
     "test:watch": "jest --watch"
