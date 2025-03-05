@@ -1,0 +1,42 @@
+name: Publish Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Extract package name from release tag
+        run: |
+          PACKAGE_NAME=$(echo "${{ github.event.release.tag_name }}" | cut -d'-' -f1)
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+
+      - name: Verify package exists
+        run: |
+          if [ ! -d "packages/$PACKAGE_NAME" ]; then
+            echo "Package 'packages/$PACKAGE_NAME' does not exist!"
+            exit 1
+          fi
+
+      - name: Build package
+        run: npm run build --workspace=packages/${{ env.PACKAGE_NAME }}
+
+      - name: Publish package
+        run: npm publish --workspace=packages/${{ env.PACKAGE_NAME }} --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
