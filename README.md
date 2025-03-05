@@ -2,6 +2,8 @@
 
 <p>Welcome to Ben's Swap Exchange Service!</p>
 
+![image](https://github.com/user-attachments/assets/181a6ecd-33c2-467c-8c5f-f0d9dbf91bfa)
+
 ## Installation
 
 ### <u>Prerequisites</u>
