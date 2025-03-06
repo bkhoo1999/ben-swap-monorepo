@@ -40,17 +40,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchCurrencyPairs = useCallback((): Promise<CurrencyPair[]> => {
     setIsLoading(true)
-    const fallbackErrorMessage = "Failed to fetch currency pairs."
     return fetch("/api/currency")
       .then(async (response) => {
-        if (!response.ok) {
-          showNotification("error", fallbackErrorMessage)
-          return []
-        }
+        if (!response.ok) throw new Error("Failed to fetch currency pairs.")
         return await response.json()
       })
       .catch((error) => {
-        showNotification("error", error.message || fallbackErrorMessage)
+        showNotification("error", error.message)
         return []
       })
       .finally(() => setIsLoading(false))
@@ -62,31 +58,25 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     fromAmount: number, 
     toAmount: number
   ): Promise<SwapResponse> => {
-      setIsLoading(true)
-      const fallbackErrorMessage = "Failed to complete Exchange."
-      return fetch("/api/currency", {
-        method: "POST",
-        body: JSON.stringify({ from, to, fromAmount, toAmount }),
-        headers: { "Content-Type": "application/json" }
+    setIsLoading(true)
+    return fetch("/api/currency", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to, fromAmount, toAmount }),
+    })
+      .then(async (response) => {
+        const data: SwapResponse = await response.json()
+        if (!response.ok) throw new Error(data.error || "Failed to complete exchange.")
+        showNotification("success", data.message || "Exchange completed successfully!")
+        return data
       })
-        .then(async (response) => {
-          const data: SwapResponse = await response.json()
-          if (!response.ok) {
-            const error = data.error || fallbackErrorMessage
-            showNotification("error", error)
-            return { error }
-          } 
-          showNotification("success", data.message || "Exchange completed successfully!")
-          return data
-        })
-        .catch((error) => {
-          const errorMessage = error.message || fallbackErrorMessage
-          showNotification("error", errorMessage)
-          return { error: errorMessage }
-        })
-        .finally(() => setIsLoading(false))
-    }, []
-  )
+      .catch((error) => {
+        showNotification("error", error.message)
+        return { error: error.message }
+      })
+      .finally(() => setIsLoading(false))
+  }, [])
+  
 
   return (
     <AppContext.Provider
