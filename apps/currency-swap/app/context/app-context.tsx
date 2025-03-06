@@ -56,8 +56,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       .finally(() => setIsLoading(false))
   }, [])
 
-  const exchangeCurrency = useCallback(
-    async (from: string, to: string, fromAmount: number, toAmount: number): Promise<SwapResponse> => {
+  const exchangeCurrency = useCallback((
+    from: string, 
+    to: string, 
+    fromAmount: number, 
+    toAmount: number
+  ): Promise<SwapResponse> => {
       setIsLoading(true)
       const fallbackErrorMessage = "Failed to complete Exchange."
       return fetch("/api/currency", {
