@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useCallback } from "react"
 import { CurrencyPair, SwapResponse } from "../api/currency/route"
-import { ModalType } from "@repo/ui/modal"
+import { ModalType } from "@benswap/ui/modal"
 
 
 interface NotificationState {
