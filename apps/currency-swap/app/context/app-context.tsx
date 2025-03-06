@@ -70,15 +70,17 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         .then(async (response) => {
           const data: SwapResponse = await response.json()
           if (!response.ok) {
-            showNotification("error", data.error || fallbackErrorMessage)
-          } else {
-            showNotification("success", data.message || "Exchange completed successfully!")
-          }
+            const error = data.error || fallbackErrorMessage
+            showNotification("error", error)
+            return { error }
+          } 
+          showNotification("success", data.message || "Exchange completed successfully!")
           return data
         })
         .catch((error) => {
-          showNotification("error", error.message || fallbackErrorMessage)
-          return { error: error.message || fallbackErrorMessage }
+          const errorMessage = error.message || fallbackErrorMessage
+          showNotification("error", errorMessage)
+          return { error: errorMessage }
         })
         .finally(() => {
           setIsLoading(false)
