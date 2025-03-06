@@ -53,9 +53,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         showNotification("error", error.message || fallbackErrorMessage)
         return []
       })
-      .finally(() => {
-        setIsLoading(false)
-      })
+      .finally(() => setIsLoading(false))
   }, [])
 
   const exchangeCurrency = useCallback(
@@ -82,9 +80,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           showNotification("error", errorMessage)
           return { error: errorMessage }
         })
-        .finally(() => {
-          setIsLoading(false)
-        })
+        .finally(() => setIsLoading(false))
     }, []
   )
 
