@@ -41,9 +41,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const fetchCurrencyPairs = useCallback((): Promise<CurrencyPair[]> => {
     setIsLoading(true)
     return fetch("/api/currency")
-      .then(async (response) => {
+      .then((response) => {
         if (!response.ok) throw new Error("Failed to fetch currency pairs.")
-        return await response.json()
+        return response.json()
       })
       .catch((error) => {
         showNotification("error", error.message)
