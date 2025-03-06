@@ -41,8 +41,6 @@ export const POST = async (request: Request) => {
       return new Response(JSON.stringify({ error: "Invalid request data" }), { status: 400 })
     }
 
-    console.log(toAmount)
-
     await simulateDBLoad()
     return Response.json({ message: `Exchange Completed: ${roundPrice(fromAmount, 2)} ${from} -> ${roundPrice(toAmount, 2)} ${to}` })
   } catch {
