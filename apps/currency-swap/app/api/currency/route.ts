@@ -12,6 +12,7 @@ export interface SwapResponse {
   error?: string
 }
 
+// Mock DB - hardcoded_currency_pairs
 export const CURRENCY_PAIRS: CurrencyPair[] = [
   { currency: "USD", value: 1, emoji: "🇺🇸", symbol: "$" },
   { currency: "HKD", value: 7.798926, emoji: "🇭🇰", symbol: "HK$" },
