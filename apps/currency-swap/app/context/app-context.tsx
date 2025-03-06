@@ -4,7 +4,6 @@ import { createContext, useContext, useState, ReactNode, useCallback } from "rea
 import { CurrencyPair, SwapResponse } from "../api/currency/route"
 import { ModalType } from "@benswap/ui/modal"
 
-
 interface NotificationState {
   isOpen: boolean
   type: ModalType
@@ -39,47 +38,52 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setNotification({ isOpen: false, type: "default", message: "" })
   }
 
-  const fetchCurrencyPairs = useCallback(async (): Promise<CurrencyPair[]> => {
+  const fetchCurrencyPairs = useCallback((): Promise<CurrencyPair[]> => {
     setIsLoading(true)
-    try {
-      const response = await fetch("/api/currency")
-      if (!response.ok) throw new Error("Failed to fetch currency pairs.")
-      return await response.json()
-    } catch {
-      showNotification("error", "Failed to fetch currency pairs.")
-      return []
-    } finally {
-      setIsLoading(false)
-    }
+    const fallbackErrorMessage = "Failed to fetch currency pairs."
+    return fetch("/api/currency")
+      .then(async (response) => {
+        if (!response.ok) {
+          showNotification("error", fallbackErrorMessage)
+          return []
+        }
+        return await response.json()
+      })
+      .catch((error) => {
+        showNotification("error", error.message || fallbackErrorMessage)
+        return []
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [])
 
   const exchangeCurrency = useCallback(
     async (from: string, to: string, fromAmount: number, toAmount: number): Promise<SwapResponse> => {
       setIsLoading(true)
       const fallbackErrorMessage = "Failed to complete Exchange."
-      try {
-        const response = await fetch("/api/currency", {
-          method: "POST",
-          body: JSON.stringify({ from, to, fromAmount, toAmount }),
+      return fetch("/api/currency", {
+        method: "POST",
+        body: JSON.stringify({ from, to, fromAmount, toAmount }),
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(async (response) => {
+          const data: SwapResponse = await response.json()
+          if (!response.ok) {
+            showNotification("error", data.error || fallbackErrorMessage)
+          } else {
+            showNotification("success", data.message || "Exchange completed successfully!")
+          }
+          return data
         })
-  
-        const data: SwapResponse = await response.json()
-  
-        if (!response.ok) {
-          showNotification("error", data.error || fallbackErrorMessage)
-          return { error: data.error || fallbackErrorMessage }
-        }
-  
-        showNotification("success", data.message || "Exchange completed successfully!")
-        return { message: data.message }
-      } catch {
-        showNotification("error", fallbackErrorMessage )
-        return { error: fallbackErrorMessage }
-      } finally {
-        setIsLoading(false)
-      }
-    }, 
-    []
+        .catch((error) => {
+          showNotification("error", error.message || fallbackErrorMessage)
+          return { error: error.message || fallbackErrorMessage }
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    }, []
   )
 
   return (
