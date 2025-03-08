@@ -57,11 +57,13 @@ const Dropdown = ({
           return (
             <button
               key={index}
-              className={`block w-full text-left px-4 py-2 ${
-                selected ? "bg-blue-300 cursor-not-allowed text-gray-600" : "hover:bg-gray-100 text-black cursor-pointer"
-              }`}
+              className={`block w-full text-left px-4 py-2 
+                ${selected ? "bg-blue-300 cursor-not-allowed" : 
+                 option.disabled ? "opacity-50 cursor-not-allowed" : 
+                 "hover:bg-gray-100 text-black cursor-pointer"}
+              `}
               onClick={() => handleSelect(option.value)}
-              disabled={selected}
+              disabled={selected || option.disabled}
             >
               {option.label}
             </button>
@@ -75,6 +77,7 @@ const Dropdown = ({
 export interface Option {
   value: any
   label: string
+  disabled?: boolean
 }
 
 export default Dropdown

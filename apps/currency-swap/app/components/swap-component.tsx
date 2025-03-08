@@ -102,6 +102,7 @@ const SwapComponent = () => {
   const options: Option[] = currencyPairs?.map((currency) => ({
     label: `${currency?.emoji} ${currency?.currency} (${currency?.symbol})`,
     value: currency,
+    disabled: sellingPair?.currency === currency?.currency || buyingPair?.currency === currency?.currency
   }))
 
   const renderNumberInput = (
