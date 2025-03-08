@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { MdOutlineSwapVert, MdOutlineSwapHoriz } from "react-icons/md"
 
 import { useApp } from "../context/app-context"
-import { formatNumber, calculateSwap, roundPrice } from "../utils/calculate"
+import { calculateSwap, roundPrice } from "../utils/calculate"
 import { CurrencyPair } from "../api/currency/route"
 
 import NumberInput from "@benswap/ui/number-input"
@@ -114,8 +114,9 @@ const SwapComponent = () => {
     <NumberInput
       prefix={label}
       disabled={isLoading}
+      locale={pair?.locale}
       displayValue={amount}
-      suffix={`${pair?.symbol || ""} ${formatNumber(roundPrice(amount, 2))}`}
+      suffix={`${pair?.symbol || ""} ${amount ? roundPrice(amount, 2, pair?.locale): "0.00"}`}
       handleChange={(value) => updateSwapState({ 
         [isSelling ? "sellingAmount" : "buyingAmount"]: value, 
         isSelling 

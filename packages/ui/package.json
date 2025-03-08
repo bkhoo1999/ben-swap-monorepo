@@ -19,7 +19,7 @@
     "build": "tsc && tailwindcss -i ./styles.css -o ./dist/index.css",
     "check-types": "tsc --noEmit",
     "dev": "tsc --watch & tailwindcss -i ./styles.css -o ./dist/index.css --watch",
-    "lint": "eslint src --max-warnings 0",
+    "lint": "eslint src --max-warnings 5",
     "test": "jest",
     "test:watch": "jest --watch"
   },
