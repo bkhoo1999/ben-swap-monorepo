@@ -1,3 +1,4 @@
+import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import Dropdown, { Option } from "../src/dropdown"
@@ -57,10 +58,7 @@ describe("Dropdown Component", () => {
     fireEvent.click(screen.getByRole("button", { name: "Select an option" }))
     fireEvent.click(screen.getByRole("button", { name: "Option 2" }))
   
-    expect(mockHandleChange).toHaveBeenCalledWith("option2")
-  
-    console.log(screen.queryByRole("dialog"))
-  
+    expect(mockHandleChange).toHaveBeenCalledWith("option2")  
     await waitFor(() => {
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     })
