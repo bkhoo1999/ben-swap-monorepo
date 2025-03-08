@@ -57,6 +57,8 @@ const SwapComponent = () => {
       updateSwapState({ buyingAmount: totalAmount })
     } else {
       const { totalAmount } = calculateSwap(buyingPair, sellingPair, buyingAmount, 'BUY') 
+      console.log(buyingAmount)
+      console.log(totalAmount)
       updateSwapState({ sellingAmount: totalAmount })
     }
   }, [sellingAmount, buyingAmount, sellingPair, buyingPair, isSelling])

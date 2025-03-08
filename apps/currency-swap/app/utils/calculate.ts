@@ -10,10 +10,11 @@ export const calculateSwap = (
   purchaseType: PurchaseType = "SELL",
 ) => {
   const fallbackAmount = { convertedAmount: "", totalAmount: "", feeAmount: "" }
-  const parsedAmount = getNormalizedValue(amount, toCurrency?.locale)
+  if (!fromCurrency || !toCurrency) return fallbackAmount
 
-  if (isNaN(parsedAmount) || parsedAmount === 0 || !fromCurrency || !toCurrency) 
-    return fallbackAmount
+  const parsedAmount = getNormalizedValue(amount, fromCurrency?.locale)
+
+  if (isNaN(parsedAmount) || parsedAmount === 0) return fallbackAmount
 
   const usdAmount = parsedAmount / fromCurrency.value
   const convertedAmount = usdAmount * toCurrency.value
