@@ -34,17 +34,9 @@ const NumberInput = ({
   }, [defaultValueState, locale])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.replace(/[^0-9.]/g, "")
-    if (inputValue.startsWith(".")) {
-      setValue("0.")
-      handleChange("0.")
-      return
-    }
-
-    const decimalCount = (inputValue.match(/\./g) || []).length
-    if (decimalCount > 1) return
-    
-    setValue(formatNumber(inputValue))
+    let inputValue = e.target.value.replace(/[^0-9.]/g, "")
+    if ((inputValue.match(/\./g) || []).length > 1) return   
+    if (inputValue.startsWith(".")) inputValue = "0." 
     handleChange(inputValue || "")
   }
 
