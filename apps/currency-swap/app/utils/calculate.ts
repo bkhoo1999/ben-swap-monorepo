@@ -59,7 +59,7 @@ const getLocaleSeparators = (locale: string = "en-US") => {
   return { decimalSeparator, thousandSeparator }
 }
 
-const getNormalizedValue = (num: string, locale: string = "en-US") => {
+export const getNormalizedValue = (num: string, locale: string = "en-US") => {
   const { decimalSeparator } = getLocaleSeparators(locale)
   const normalizedNum = num.replace(decimalSeparator, ".")
   return parseFloat(normalizedNum)
