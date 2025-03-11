@@ -22,11 +22,19 @@ const NumberInput = ({
   const defaultValueState = displayValue || ""
   const [value, setValue] = useState(defaultValueState)
 
+  const getLocaleSeparators = (locale: string = "en-US") => {
+    const formattedNumber = new Intl.NumberFormat(locale).format(1.1)
+    const decimalSeparator = formattedNumber.includes(",") ? "," : "."
+    const thousandSeparator = decimalSeparator === "." ? "," : "."
+    return { decimalSeparator, thousandSeparator }
+  }
+
   const formatNumber = (num: string, locale: string = "en-US") => {
     if (num === "") return ""
-    const [rawIntegerPart, decimalPart] = num.split(".")
-    const integerPart = new Intl.NumberFormat(locale).format(parseFloat((rawIntegerPart || "").replace(/,/g, "")) || 0)
-    return decimalPart !== undefined ? `${integerPart}.${decimalPart}` : integerPart
+    const { decimalSeparator, thousandSeparator } = getLocaleSeparators(locale)
+    const [rawIntegerPart, decimalPart] = num.replace(new RegExp(`\\${thousandSeparator}`, "g"), "").split(decimalSeparator)
+    const integerPart = new Intl.NumberFormat(locale).format(parseFloat(rawIntegerPart || "0"))
+    return decimalPart !== undefined ? `${integerPart}${decimalSeparator}${decimalPart}` : integerPart
   }
 
   useEffect(() => {
@@ -34,9 +42,16 @@ const NumberInput = ({
   }, [defaultValueState, locale])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let inputValue = e.target.value.replace(/[^0-9.]/g, "")
-    if ((inputValue.match(/\./g) || []).length > 1) return   
-    if (inputValue.startsWith(".")) inputValue = "0." 
+    let inputValue = e.target.value
+    const { decimalSeparator } = getLocaleSeparators(locale)
+    const alternativeSeparator = decimalSeparator === "." ? "," : "."
+
+    if ((inputValue.match(new RegExp(`\\${decimalSeparator}`, "g")) || []).length > 1) return
+
+    inputValue = inputValue.replace(new RegExp(`\\${alternativeSeparator}`, "g"), decimalSeparator)
+    inputValue = inputValue.replace(new RegExp(`[^0-9\\${decimalSeparator}]`, "g"), "")
+    if (inputValue.startsWith(decimalSeparator)) inputValue = `0${decimalSeparator}`
+
     handleChange(inputValue || "")
   }
 
