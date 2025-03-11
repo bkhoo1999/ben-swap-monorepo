@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react"
+import { useState, Fragment, useEffect } from "react"
 import Button from "./button"
 import Modal from "./modal"
 import { Color, Size } from "./utils/style"
@@ -28,6 +28,10 @@ const Dropdown = ({
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isDirty, setIsDirty] = useState(Boolean(value))
+
+  useEffect(() => {
+    setIsDirty(Boolean(value))
+  }, [value])
 
   const toggleModal = () => setIsOpen((prev) => !prev)
   const handleClose = () => {
