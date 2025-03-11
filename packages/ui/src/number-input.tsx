@@ -42,10 +42,16 @@ const NumberInput = ({
   }, [defaultValueState, locale])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = e.target.value
     const { decimalSeparator } = getLocaleSeparators(locale)
-    let inputValue = e.target.value.replace(new RegExp(`[^0-9\\${decimalSeparator}]`, "g"), "")
+    const alternativeSeparator = decimalSeparator === "." ? "," : "."
+
     if ((inputValue.match(new RegExp(`\\${decimalSeparator}`, "g")) || []).length > 1) return
+
+    inputValue = inputValue.replace(new RegExp(`\\${alternativeSeparator}`, "g"), decimalSeparator)
+    inputValue = inputValue.replace(new RegExp(`[^0-9\\${decimalSeparator}]`, "g"), "")
     if (inputValue.startsWith(decimalSeparator)) inputValue = `0${decimalSeparator}`
+
     handleChange(inputValue || "")
   }
 
